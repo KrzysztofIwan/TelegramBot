@@ -8,8 +8,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def task(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("to jest węzeł do tasków")
 
+async def classifier(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("to jest węzeł do classifier")
+
 async def full_pipeline(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("to jest węzeł do full_pipeline")
+
+async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("to jest węzeł do stats")
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     help_text = (
@@ -17,7 +23,9 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/start - Uruchamia bota\n"
         "/help - Wyświetla tę listę pomocy\n"
         "/task - prace nad taskami\n"
-        "/full_pipeline - praca nad full_pipeline"
+        "/full_pipeline - praca nad full_pipeline\n"
+        "/classifier - praca nad classifier\n"
+        "/stats - praca nad stats"
     )
     await update.message.reply_text(help_text)
 
@@ -34,5 +42,7 @@ if __name__ == '__main__':
     application.add_handler(CommandHandler('help', help))
     application.add_handler(CommandHandler('task', task))
     application.add_handler(CommandHandler('full_pipeline', full_pipeline))
+    application.add_handler(CommandHandler('classifier', classifier))
+    application.add_handler(CommandHandler('stats', stats))
 
     application.run_polling()
