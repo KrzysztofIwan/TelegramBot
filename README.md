@@ -19,7 +19,7 @@ Przed uruchomieniem należy dodać folder wraz z plikiem w lokalizacji:
 
 Następnie należy w pliku 'setup_api.json' wstawić swój token który został zwrócony przez FatherBot-a, poniżej zamieszczam treść pliku
 
-```xml
+```json
 {
     "token" : "TWÓJ TOKEN BOTA"
 }
@@ -32,6 +32,6 @@ pip install -r requirements.txt
 ```
 **2. Uruchomienie projetku:**
 ```bash
-streamlit run main.py
+run main.py
 ```
 
