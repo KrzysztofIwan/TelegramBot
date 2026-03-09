@@ -1,48 +1,16 @@
+from handlers import help_handler, classifier_handler, task_handler, full_pipeline_handler, stats_handler
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from config import load_token
 import json
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Witaj, jestem gotowy do działania!")
-
-async def task(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("to jest węzeł do tasków")
-
-async def classifier(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("to jest węzeł do classifier")
-
-async def full_pipeline(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("to jest węzeł do full_pipeline")
-
-async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("to jest węzeł do stats")
-
-async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    help_text = (
-        "Dostępne komendy:\n"
-        "/start - Uruchamia bota\n"
-        "/help - Wyświetla tę listę pomocy\n"
-        "/task - prace nad taskami\n"
-        "/full_pipeline - praca nad full_pipeline\n"
-        "/classifier - praca nad classifier\n"
-        "/stats - praca nad stats"
-    )
-    await update.message.reply_text(help_text)
-
-def load_token(file_path):
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-        return data['token']
-
 if __name__ == '__main__':
-    token = load_token('data/setup_api.json')
+    token = load_token()
     application = ApplicationBuilder().token(token).build()
-
-    application.add_handler(CommandHandler('start', start))
-    application.add_handler(CommandHandler('help', help))
-    application.add_handler(CommandHandler('task', task))
-    application.add_handler(CommandHandler('full_pipeline', full_pipeline))
-    application.add_handler(CommandHandler('classifier', classifier))
-    application.add_handler(CommandHandler('stats', stats))
-
+    application.add_handler(CommandHandler('start', help_handler.start_handle))
+    application.add_handler(CommandHandler('help', help_handler.help_handle))
+    application.add_handler(CommandHandler('task', task_handler.handle))
+    application.add_handler(CommandHandler('full_pipeline', full_pipeline_handler.handle))
+    application.add_handler(CommandHandler('classifier', classifier_handler.handle))
+    application.add_handler(CommandHandler('stats', stats_handler.handle))
     application.run_polling()
